@@ -1,4 +1,5 @@
 const fs = require("fs");
+
 const requestHandler = (req, res) => {
   const url = req.url;
   const method = req.method;
@@ -16,9 +17,12 @@ const requestHandler = (req, res) => {
   }
   if (url === "/message" && method === "POST") {
     const body = [];
+
+    // message parsing
     req.on("data", (chunk) => {
       body.push(chunk);
     });
+
     req.on("end", () => {
       const parsedBody = Buffer.concat(body).toString();
       const message = parsedBody.split("=")[1];
